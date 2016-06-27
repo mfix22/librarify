@@ -1,6 +1,8 @@
 #Librarify
 ### Create a Node.js library for your REST API with just a config JSON object
 
+**Librarify** is a library for creating libraries for REST APIs as easily as possible. When you create a library with Librarify, your library has functions to configure parameter requirements and defaults at a per-function and global basis.
+
 ###Getting started
 ```sh
 $ npm install --save what3words
@@ -41,7 +43,39 @@ overidden by the specific function call.
 * `fns` _(required)_ - return data format type. Can be `json` (the default), `geojson` or `xml`
 
 ####Examples
-```sh
-$ node examples/slack.js
-$ node examples/what3words.js
+All see [/examples](examples)
+
+```javascript
+var settings = {
+  'url' : 'https://api.what3words.com/v2',
+  'defaults' : {
+    lang : 'en',
+    format : 'json',
+    display : 'full'
+  },
+  'fns' : {
+    'forward' : {
+      route : '/forward',
+      requiredConfig : ['key'],
+      requiredParam : ['addr'],
+      optionalConfig : ['lang', 'format', 'display'],
+      optionalParam : []
+    }
+  }
+}
+
+var library = new librarify(settings);
+library.config({
+  key : process.env.W3W_KEY, // <INSERT_YOUR_W3W_KEY_HERE>
+});
+
+library.forward({
+  addr : 'steep.sober.potato',
+  display : 'terse'
+}, function (err, res){
+  if (err) console.log(JSON.stringify(err, null, 4));
+  else {
+    console.log(JSON.stringify(res, null, 4));
+  }
+});
 ```
