@@ -51,16 +51,16 @@ var settings = {
   }
 }
 
-var library = new librarify(settings);
+var w3w = new librarify(settings);
 
-library.config({
+w3w.config({
   key : process.env.W3W_KEY, // <INSERT_YOUR_W3W_KEY_HERE>
   lang : 'en',
   format : "json",
   randomThing : 'RANDOM'
 });
 
-library.forward({
+w3w.forward({
   addr : 'steep.sober.potato',
   display : 'terse'
 }, function (err, res){

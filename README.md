@@ -21,6 +21,7 @@ var myLibrary = new Library(settings);
 var settings = {
   url : 'https://your.baseurl.com/v2',
   defaults : {
+    key : 'KEY_THAT_IS_NEEDED_FOR_EVERYTHING',
     globalFormat : 'pretty'
   },
   fns : {
@@ -59,7 +60,7 @@ library.config({
 ```
 
 ####Examples
-All see [/examples](examples)
+Also see   [/examples](examples)
 
 This example is for the [what3words API](https://docs.what3words.com/api/v2/)
 ```javascript
@@ -96,3 +97,6 @@ library.forward({
   }
 });
 ```
+
+### Coming Soon
+Multiple HTTP request options (POST, PUT, DELETE)
