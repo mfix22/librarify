@@ -42,7 +42,7 @@ var myLibrary = new Library(settings);
 * `defaults` _(optional)_ - specify default parameter values by { parameter : value }
 * `fns` _(required)_ - supported functions for your Library
    * `name` _(required)_ - name of your library function (must be a valid Javascript function name)
-      * `route`  _(optional)_ - URL path. Defaults to `/functionName`
+      * `route`  _(optional)_ - URL path. Defaults to `/<function_name>`
       * `requiredConfig` _(optional)_ - array of names of required parameters that may have been specified in config for this function.
       * `requiredParam` _(optional)_ - array of names of required parameters for this function.
       * `optionalConfig` _(optional)_ - array of names of optional parameters that may have been specified in config for this function.
