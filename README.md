@@ -41,12 +41,12 @@ var myLibrary = new Library(settings);
 * `url` _(required)_ - your API key (get yours [here](https://map.what3words.com/register?dev=true))
 * `defaults` _(optional)_ - specify default parameter values by { parameter : value }
 * `fns` _(required)_ - supported functions for your Library
-  * `name` _(required)_ - name of your library function (must be a valid Javascript function name)
-   * `route`  _(optional)_ - URL path. Defaults to `/functionName`
-   * `requiredConfig` _(optional)_ - array of names of required parameters that may have been specified in config for this function.
-   * `requiredParam` _(optional)_ - array of names of required parameters for this function.
-   * `optionalConfig` _(optional)_ - array of names of optional parameters that may have been specified in config for this function.
-   * `optionalParam` _(optional)_ - array of names of optional parameters for this function.
+   * `name` _(required)_ - name of your library function (must be a valid Javascript function name)
+      * `route`  _(optional)_ - URL path. Defaults to `/functionName`
+      * `requiredConfig` _(optional)_ - array of names of required parameters that may have been specified in config for this function.
+      * `requiredParam` _(optional)_ - array of names of required parameters for this function.
+      * `optionalConfig` _(optional)_ - array of names of optional parameters that may have been specified in config for this function.
+      * `optionalParam` _(optional)_ - array of names of optional parameters for this function.
 
 #####Config
 All config options can be overidden in function calls. Each config option will be included in every call that is not
