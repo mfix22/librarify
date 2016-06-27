@@ -20,7 +20,9 @@ var myLibrary = new Library(settings);
 ```javascript
 var settings = {
   url : 'https://your.baseurl.com/v2',
-  defaults : {},
+  defaults : {
+    globalFormat : 'pretty'
+  },
   fns : {
     fn1 : {
       route : '/routeForFn1', //hits https://your.baseurl.com/v1/routeForFn1
@@ -39,11 +41,11 @@ var myLibrary = new Library(settings);
 * `defaults` _(optional)_ - specify default parameter values by { parameter : value }
 * `fns` _(required)_ - supported functions for your Library
   * `name` _(required)_ - name of your library function (must be a valid Javascript function name)
-   * 'route'  _(optional)_ - URL path. Defaults to `/functionName`
-   * 'requiredConfig' _(optional)_ - array of names of required parameters that may have been specified in config for this function.
-   * 'requiredParam' _(optional)_ - array of names of required parameters for this function.
-   * 'optionalConfig' _(optional)_ - array of names of optional parameters that may have been specified in config for this function.
-   * 'optionalParam' _(optional)_ - array of names of optional parameters for this function.
+   * `route`  _(optional)_ - URL path. Defaults to `/functionName`
+   * `requiredConfig` _(optional)_ - array of names of required parameters that may have been specified in config for this function.
+   * `requiredParam` _(optional)_ - array of names of required parameters for this function.
+   * `optionalConfig` _(optional)_ - array of names of optional parameters that may have been specified in config for this function.
+   * `optionalParam` _(optional)_ - array of names of optional parameters for this function.
 
 #####Config
 All config options can be overidden in function calls. Each config option will be included in every call that is not
@@ -51,13 +53,15 @@ overidden by the specific function call.
 ```javascript
 var library = new librarify(settings);
 library.config({
-  key : process.env.HIDDEN_KEY
+  key : process.env.HIDDEN_KEY,
+  globalFormat : 'pretty'
 });
 ```
 
 ####Examples
 All see [/examples](examples)
 
+This example is for the [what3words API](https://docs.what3words.com/api/v2/)
 ```javascript
 var settings = {
   'url' : 'https://api.what3words.com/v2',
@@ -92,5 +96,3 @@ library.forward({
   }
 });
 ```
-
-###
