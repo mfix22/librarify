@@ -50,7 +50,7 @@ var myLibrary = new Library(settings);
 
 #####Config
 All config options can be overidden in function calls. Each config option will be included in every call that is not
-overidden by the specific function call.
+overidden by the specific function call. Config() is used to set parameters that are needed for all/most of your function calls (tokens, keys, or global formatting).
 ```javascript
 var library = new librarify(settings);
 library.config({
