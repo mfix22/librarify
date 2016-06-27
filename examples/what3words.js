@@ -54,7 +54,7 @@ var settings = {
 var library = new librarify(settings);
 
 library.config({
-  key : 'TBJKS6ER',
+  key : process.env.W3W_KEY, // <INSERT_YOUR_W3W_KEY_HERE>
   lang : 'en',
   format : "json",
   randomThing : 'RANDOM'
