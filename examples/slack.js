@@ -5,8 +5,8 @@ var settings = {
   'defaults' : {
   },
   'fns' : {
-    'users' : {
-      route : '/users.list',
+    'users.list' : {
+      // route : '/users.list',
       requiredConfig : ['token'],
       requiredParam : [],
       optionalConfig : [],
@@ -20,6 +20,6 @@ slack.config({
   'token' : process.env.SLACK_TOKEN // <INSERT_YOUR_SLACK_TOKEN_HERE>
 })
 
-slack.users({}, function(err, res){
+slack.users.list({}, function(err, res){
   console.log(JSON.stringify(err || res, null, 4));
 })

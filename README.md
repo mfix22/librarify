@@ -40,7 +40,7 @@ var myLibrary = new Library(settings);
 ######options
 * `url` _(required)_ - your API key (get yours [here](https://map.what3words.com/register?dev=true))
 * `defaults` _(optional)_ - specify default parameter values by { parameter : value }
-* `fns` _(required)_ - supported functions for your Library
+* `fns` _(optional)_ - supported functions for your Library
    * `name` _(required)_ - name of your library function (must be a valid Javascript function name)
       * `route`  _(optional)_ - URL path. Defaults to `/<function_name>`
       * `requiredConfig` _(optional)_ - array of names of required parameters that may have been specified in config for this function.
@@ -58,6 +58,9 @@ library.config({
   globalFormat : 'pretty'
 });
 ```
+
+For each function name in settings.fns, a function with that name will be created. RFC-style names with '.'s are also supported.
+Example: `setting.fns['foo']` will create `myLibrary.foo(options[, callback])`. settings.fns['foo.bar'] will create `myLibrary.foo.bar(options[, callback])`
 
 ####Examples
 Also see   [/examples](examples)
