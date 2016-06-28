@@ -17,15 +17,18 @@ var myLibrary = new Library(settings);
 ```
 
 ####Settings
+For each function name in settings.fns, a function with that name will be created. RFC-style names with '.'s are also supported.
+Example: `setting.fns['foo']` will create `myLibrary.foo(options[, callback])`. settings.fns['foo.bar'] will create `myLibrary.foo.bar(options[, callback])`
+
 ```javascript
 var settings = {
-  url : 'https://your.baseurl.com/v2',
+  url : 'https://your.baseurl.com/v1',
   defaults : {
     key : 'KEY_THAT_IS_NEEDED_FOR_EVERYTHING',
     globalFormat : 'pretty'
   },
   fns : {
-    fn1 : {
+    'fn1' : {
       route : '/routeForFn1', //hits https://your.baseurl.com/v1/routeForFn1
       requiredConfig : ['key'],
       requiredParam : ['you', 'need', 'these'],
@@ -53,14 +56,12 @@ All config options can be overidden in function calls. Each config option will b
 overidden by the specific function call. Config() is used to set parameters that are needed for all/most of your function calls (tokens, keys, or global formatting).
 ```javascript
 var library = new librarify(settings);
+
 library.config({
   key : process.env.HIDDEN_KEY,
   globalFormat : 'pretty'
 });
 ```
-
-For each function name in settings.fns, a function with that name will be created. RFC-style names with '.'s are also supported.
-Example: `setting.fns['foo']` will create `myLibrary.foo(options[, callback])`. settings.fns['foo.bar'] will create `myLibrary.foo.bar(options[, callback])`
 
 ####Examples
 Also see   [/examples](examples)
