@@ -19,8 +19,8 @@ var myLibrary = new Library(settings);
 ####Settings
 For each function name in `settings.fns`, a function with that name will be created. RFC-style names separated by dots are also supported.
 Examples:
-* `setting.fns['foo']` will create `myLibrary.foo(options[, callback])`
-* `settings.fns['foo.bar']` will create `myLibrary.foo.bar(options[, callback])`
+* `setting.fns['foo']` will create `myLibrary.foo(params[, callback])`
+* `settings.fns['foo.bar']` will create `myLibrary.foo.bar(params[, callback])`
 
 ```javascript
 var settings = {
@@ -29,8 +29,8 @@ var settings = {
     key : 'KEY_THAT_IS_NEEDED_FOR_EVERYTHING',
     globalFormat : 'pretty'
   },
-  fns : {
-    'fn1' : {
+  fns : { // list of functions your library will include
+    'fn1' : {  
       route : '/routeForFn1', //hits https://your.baseurl.com/v1/routeForFn1
       requiredConfig : ['key'],
       requiredParam : ['you', 'need', 'these'],
