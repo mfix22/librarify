@@ -21,6 +21,7 @@ For each function name in `settings.fns`, a function with that name will be crea
 Examples:
 * `setting.fns['foo']` will create `myLibrary.foo(params[, callback])`
 * `settings.fns['foo.bar']` will create `myLibrary.foo.bar(params[, callback])`
+For each of these functions, the callback is not required. If specified, the callback will be executed, otherwise a [`Promise`](https://www.npmjs.com/package/promise) is returned.
 
 ```javascript
 var settings = {
@@ -43,7 +44,7 @@ var settings = {
 var myLibrary = new Library(settings);
 ```
 ######options
-* `url` _(required)_ - your API key (get yours [here](https://map.what3words.com/register?dev=true))
+* `url` _(required)_ - you API's root URL.
 * `defaults` _(optional)_ - specify default parameter values by { parameter : value }
 * `fns` _(optional)_ - supported functions for your Library
    * `name` _(required)_ - name of your library function (must be a valid Javascript function name)
@@ -55,7 +56,7 @@ var myLibrary = new Library(settings);
 
 #####Config
 All config options can be overidden in function calls. Each config option will be included in every call that is not
-overidden by the specific function call. Config() is used to set parameters that are needed for all/most of your function calls (tokens, keys, or global formatting).
+overidden by the specific function call. Config() is used to set parameters that are needed for all/most of your function calls (think tokens, keys, or global formatting).
 ```javascript
 var library = new librarify(settings);
 
@@ -106,12 +107,3 @@ library.forward({
 
 ### Coming Soon
 Multiple HTTP request options (POST, PUT, DELETE)
-
-###License
-Copyright (c) 2016, Michael Fix
-
-Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-Source: http://opensource.org/licenses/ISC
