@@ -21,6 +21,7 @@ For each function name in `settings.fns`, a function with that name will be crea
 Examples:
 * `setting.fns['foo']` will create `myLibrary.foo(params[, callback])`
 * `settings.fns['foo.bar']` will create `myLibrary.foo.bar(params[, callback])`
+
 For each of these functions, the callback is not required. If specified, the callback will be executed, otherwise a [`Promise`](https://www.npmjs.com/package/promise) is returned.
 
 ```javascript
