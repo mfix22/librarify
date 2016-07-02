@@ -1,32 +1,34 @@
 var librarify = require('../librarify');
 
 var settings = {
+  'package' : 'w3w',
   'url' : 'https://api.what3words.com/v2',
-  'defaults' : {
+  'config' : {
+    key : {
+      required : true
+    },
     lang : 'en',
     format : 'json',
     display : 'full'
   },
+
   'fns' : {
     'forward' : {
       route : '/forward',
       requiredConfig : ['key'],
       requiredParam : ['addr'],
-      optionalConfig : ['lang', 'format', 'display'],
-      optionalParam : []
     },
     'reverse' : {
       route : '/reverse',
       requiredConfig : ['key'],
       requiredParam : ['coords'],
-      optionalConfig : ['lang', 'format', 'display'],
-      optionalParam : []
+      optionalConfig : true,
     },
     'autosuggest' : {
       route : '/autosuggest',
       requiredConfig : ['key'],
       requiredParam : ['addr'],
-      optionalConfig : ['lang', 'format', 'display'],
+      optionalConfig : true,
       optionalParam : ['focus', 'clip']
     },
     'standardblend' : {
@@ -40,13 +42,10 @@ var settings = {
       requiredConfig : ['key'],
       requiredParam : ['bbox'],
       optionalConfig : ['format'],
-      optionalParam : []
     },
     'languages' : {
       requiredConfig : ['key'],
-      requiredParam : [],
       optionalConfig : ['format'],
-      optionalParam : []
     }
   }
 }
@@ -57,7 +56,7 @@ w3w.config({
   key : process.env.W3W_KEY, // <INSERT_YOUR_W3W_KEY_HERE>
   lang : 'en',
   format : "json",
-  randomThing : 'RANDOM'
+  randomThing : 'RANDOM' // not included in calls
 });
 
 w3w.forward({

@@ -2,16 +2,13 @@ var Library = require('../librarify');
 
 var settings = {
   'url' : 'https://slack.com/api',
-  'defaults' : {
+  'config' : {
+    'token' : {
+      'required' : true
+    }
   },
   'fns' : {
-    'users.list' : {
-      // route : '/users.list',
-      requiredConfig : ['token'],
-      requiredParam : [],
-      optionalConfig : [],
-      optionalParam : []
-    }
+    'users.list' : {}
   }
 }
 

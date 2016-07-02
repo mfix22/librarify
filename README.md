@@ -27,14 +27,15 @@ For each of these functions, the callback is not required. If specified, the cal
 ```javascript
 var settings = {
   url : 'https://your.baseurl.com/v1',
-  defaults : {
-    key : 'KEY_THAT_IS_NEEDED_FOR_EVERYTHING',
-    globalFormat : 'pretty'
+  config : {
+    key : { // parameter that is required for all function calls
+      required : true
+    },
+    globalFormat : 'pretty' // default value of 'globalFormat' is 'pretty'
   },
   fns : { // list of functions your library will include
-    'fn1' : {  
-      route : '/routeForFn1', //hits https://your.baseurl.com/v1/routeForFn1
-      requiredConfig : ['key'],
+    'function_name' : {  
+      route : '/routeForFn1', // hits https://your.baseurl.com/v1/routeForFn1.
       requiredParam : ['you', 'need', 'these'],
       optionalConfig : ['globalFormat'],
       optionalParam : ['nice', 'to', 'haves']
@@ -46,13 +47,23 @@ var myLibrary = new Library(settings);
 ```
 ###### options
 * `url` _(required)_ - you API's root URL.
-* `defaults` _(optional)_ - specify default parameter values by { parameter : value }
+* `config` _(optional)_ - specify default parameter values and requirements.
+Example:
+```javascript
+  config : {
+    param1 : true, // required by all calls
+    param2 : 'foo', // parameter defaults to 'foo'
+    param3 : {
+      defaultVal : 'bar',
+      required : false
+    }
+  }
+```
 * `fns` _(optional)_ - supported functions for your Library
    * `name` _(required)_ - name of your library function (must be a valid Javascript function name)
       * `route`  _(optional)_ - URL path. Defaults to `/<function_name>`
-      * `requiredConfig` _(optional)_ - array of names of required parameters that may have been specified in config for this function.
       * `requiredParam` _(optional)_ - array of names of required parameters for this function.
-      * `optionalConfig` _(optional)_ - array of names of optional parameters that may have been specified in config for this function.
+      * `optionalConfig` _(optional)_ - array of names of optional parameters specified in config for this function, or `true` to include all config options.
       * `optionalParam` _(optional)_ - array of names of optional parameters for this function.
 
 ##### Config
@@ -90,12 +101,12 @@ var settings = {
   }
 }
 
-var library = new librarify(settings);
-library.config({
+var my_library = new librarify(settings);
+my_library.config({
   key : process.env.W3W_KEY,
 });
 
-library.forward({
+my_library.forward({
   addr : 'steep.sober.potato',
   display : 'terse'
 }, function (err, res){
@@ -107,7 +118,7 @@ library.forward({
 ```
 
 ### Auto-Generating a README for your library
-Requires a JSON settings file that is identical to the one passed into `Librarify`
+Requires a JSON settings file that is identical to the one passed into `Librarify` constructor.
 ```sh
 $ npm run readme path_to_settings.json [path_to_output_file]
 ```
