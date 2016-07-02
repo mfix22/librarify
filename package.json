@@ -7,7 +7,8 @@
     "example": "examples"
   },
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "readme" : "node lib/readme.js"
   },
   "keywords": [
     "library",
