@@ -1,22 +1,22 @@
-#Librarify
+# Librarify
 ### Create a Node.js library for your REST API with just a _settings_ JSON object
 
 **Librarify** is a library for creating libraries for REST APIs as easily as possible. When you create a library with **Librarify**, your library has functions to configure parameter requirements and defaults at a per-function and global basis.
 
-###Getting started
+### Getting started
 ```sh
 $ npm install --save librarify
 ```
 ___
-###Usage
-###Node.js
+### Usage
+### Node.js
 ```javascript
 var Library = require('librarify');
 
 var myLibrary = new Library(settings);
 ```
 
-####Settings
+#### Settings
 For each function name in `settings.fns`, a function with that name will be created. RFC-style names separated by dots are also supported.
 Examples:
 * `setting.fns['foo']` will create `myLibrary.foo(params[, callback])`
@@ -44,7 +44,7 @@ var settings = {
 
 var myLibrary = new Library(settings);
 ```
-######options
+###### options
 * `url` _(required)_ - you API's root URL.
 * `defaults` _(optional)_ - specify default parameter values by { parameter : value }
 * `fns` _(optional)_ - supported functions for your Library
@@ -55,7 +55,7 @@ var myLibrary = new Library(settings);
       * `optionalConfig` _(optional)_ - array of names of optional parameters that may have been specified in config for this function.
       * `optionalParam` _(optional)_ - array of names of optional parameters for this function.
 
-#####Config
+##### Config
 All config options can be overidden in function calls. Each config option will be included in every call that is not
 overidden by the specific function call. Config() is used to set parameters that are needed for all/most of your function calls (think tokens, keys, or global formatting).
 ```javascript
@@ -67,7 +67,7 @@ library.config({
 });
 ```
 
-####Examples
+#### Examples
 Also see   [/examples](examples)
 
 This example is for the [what3words API](https://docs.what3words.com/api/v2/)
@@ -107,4 +107,5 @@ library.forward({
 ```
 
 ### Coming Soon
-Multiple HTTP request options (POST, PUT, DELETE)
+- [x] Support RFC dotted method calleds
+- [ ] Multiple HTTP request options (POST, PUT, DELETE)
