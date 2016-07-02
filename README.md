@@ -106,6 +106,13 @@ library.forward({
 });
 ```
 
+### Auto-Generating a README for your library
+Requires a JSON settings file that is identical to the one passed into `Librarify`
+```sh
+$ npm run readme path_to_settings.json [path_to_output_file]
+```
+
 ### Coming Soon
 - [x] Support RFC dotted method calleds
 - [ ] Multiple HTTP request options (POST, PUT, DELETE)
+- [ ] Automatic README generating script
