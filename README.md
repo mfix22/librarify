@@ -61,7 +61,7 @@ Example:
 ```
 * `fns` _(optional)_ - supported functions for your Library
    * `name` _(required)_ - name of your library function (must be a valid Javascript function name)
-      * `route`  _(optional)_ - URL path. Defaults to `/<function_name>`
+      * `route`  _(optional)_ - URL path. Defaults to `/function_name`
       * `requiredParam` _(optional)_ - array of names of required parameters for this function.
       * `optionalConfig` _(optional)_ - array of names of optional parameters specified in config for this function, or `true` to include all config options.
       * `optionalParam` _(optional)_ - array of names of optional parameters for this function.
@@ -74,7 +74,7 @@ var library = new librarify(settings);
 
 library.config({
   key : process.env.HIDDEN_KEY,
-  globalFormat : 'pretty'
+  global_format : 'pretty'
 });
 ```
 
@@ -85,28 +85,26 @@ This example is for the [what3words API](https://docs.what3words.com/api/v2/)
 ```javascript
 var settings = {
   'url' : 'https://api.what3words.com/v2',
-  'defaults' : {
+  'config' : {
+    key : {
+      required : true
+    },
     lang : 'en',
-    format : 'json',
-    display : 'full'
   },
   'fns' : {
     'forward' : {
-      route : '/forward',
-      requiredConfig : ['key'],
       requiredParam : ['addr'],
       optionalConfig : ['lang', 'format', 'display'],
-      optionalParam : []
     }
   }
 }
 
-var my_library = new librarify(settings);
-my_library.config({
+var w3w = new Library(settings);
+w3w.config({
   key : process.env.W3W_KEY,
 });
 
-my_library.forward({
+w3w.forward({
   addr : 'steep.sober.potato',
   display : 'terse'
 }, function (err, res){
@@ -125,5 +123,5 @@ $ npm run readme path_to_settings.json [path_to_output_file]
 
 ### Coming Soon
 - [x] Support RFC dotted method calleds
+- [x] Automatic README generating script
 - [ ] Multiple HTTP request options (POST, PUT, DELETE)
-- [ ] Automatic README generating script
