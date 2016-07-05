@@ -63,7 +63,7 @@ Example:
 * `fns` _(optional)_ - supported functions for your Library
    * `name` _(required)_ - name of your library function (must be a valid Javascript function name)
       * `route`  _(optional)_ - URL path. Defaults to `/function_name`
-      * `type`  _(optional)_ - HTTP request type. GET and POST currently supported. Defaults to `GET`.
+      * `type`  _(optional)_ - HTTP request type. GET, POST, PUT currently supported. Defaults to `GET`. Parameters are sent as query params for GET requests and as body params elsewise.
       * `requiredParam` _(optional)_ - array of names of required parameters for this function.
       * `optionalConfig` _(optional)_ - array of names of optional parameters specified in config for this function, or `true` to include all config options.
       * `optionalParam` _(optional)_ - array of names of optional parameters for this function.
@@ -126,4 +126,5 @@ $ npm run readme path_to_settings.json [path_to_output_file]
 ### Coming Soon
 - [x] ~~Support RFC dotted method calleds~~
 - [x] ~~Automatic README generating script~~
-- [ ] Multiple HTTP request options (POST, PUT, DELETE)
+- [x] ~~Multiple HTTP request options (POST, PUT, DELETE)~~
+- [ ] Support specifying individual parameter type: query, body, or header as well as pluggable inline URL params.
