@@ -10,6 +10,48 @@ Library.prototype.config = function(config) {
   }
 }
 
+function put(params, fname, callback) {
+  var fn = this.fns[fname];
+  var address = this.url + (fn.route || "/" + fname)
+  if (this._requiredConfigs)
+    this._requiredConfigs.forEach((requirement) => {
+      if (!this._configuration[requirement] && !params[requirement]) throw new Error(requirement + " is required.");
+      // include configured parameters
+      params[requirement] = this._configuration[requirement];
+    });
+  if (fn.requiredParam)
+    fn.requiredParam.forEach((requirement) => {
+      if (!params[requirement]) throw new Error(requirement + " parameter is missing.");
+    });
+  if (fn.optionalConfig) {
+    if (typeof fn.optionalConfig == 'boolean' && fn.optionalConfig == true) {
+      for (var i in this._configuration) {
+        if (object.hasOwnProperty(i)) {
+          var option = this._configuration[i]
+          params[option] = params[option] || this._configuration[option];
+        }
+      }
+    } else{
+      fn.optionalConfig.forEach((option) => {
+        params[option] = params[option] || this._configuration[option]
+      });
+    }
+  }
+  if (callback) {
+    Request.post({url : address, form: params}, function (err, response, body) {
+      if (err) callback(err, null);
+      else callback(null, JSON.parse(body));
+    });
+  } else {
+    return new Promise(function (fulfill, reject){
+      Request.post(address, function (err, response, body) {
+        if (err) reject(err);
+        else fulfill(JSON.parse(body));
+      });
+    });
+  }
+}
+
 function post(params, fname, callback) {
   var fn = this.fns[fname];
   var address = this.url + (fn.route || "/" + fname)
@@ -122,6 +164,7 @@ function Library(settings) {
   // used for to access get() for dynamic function naming
   this._get = get;
   this._post = post;
+  this._put = put;
   var call = '_get'
   for (var fn in settings.fns) {
     if (settings.fns.hasOwnProperty(fn)) {
