@@ -8,7 +8,9 @@ var settings = {
     }
   },
   'fns' : {
-    'users.list' : {}
+    'users.list' : {
+      'type' : 'POST'
+    }
   }
 }
 

@@ -36,6 +36,7 @@ var settings = {
   fns : { // list of functions your library will include
     'function_name' : {  
       route : '/routeForFn1', // hits https://your.baseurl.com/v1/routeForFn1.
+      type : 'POST' // HTTP request type
       requiredParam : ['you', 'need', 'these'],
       optionalConfig : ['globalFormat'],
       optionalParam : ['nice', 'to', 'haves']
@@ -62,13 +63,14 @@ Example:
 * `fns` _(optional)_ - supported functions for your Library
    * `name` _(required)_ - name of your library function (must be a valid Javascript function name)
       * `route`  _(optional)_ - URL path. Defaults to `/function_name`
+      * `type`  _(optional)_ - HTTP request type. GET and POST currently supported. Defaults to `GET`.
       * `requiredParam` _(optional)_ - array of names of required parameters for this function.
       * `optionalConfig` _(optional)_ - array of names of optional parameters specified in config for this function, or `true` to include all config options.
       * `optionalParam` _(optional)_ - array of names of optional parameters for this function.
 
 ##### Config
 All config options can be overidden in function calls. Each config option will be included in every call that is not
-overidden by the specific function call. Config() is used to set parameters that are needed for all/most of your function calls (think tokens, keys, or global formatting).
+overidden by the specific function call. Config() is used to set parameters that are needed for all/most of your function calls (think API tokens, keys, or global formatting).
 ```javascript
 var library = new librarify(settings);
 
