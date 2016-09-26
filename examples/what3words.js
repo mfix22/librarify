@@ -1,4 +1,4 @@
-var librarify = require('../librarify');
+var librarify = require('../src/librarify');
 
 var settings = {
   'package' : 'w3w',

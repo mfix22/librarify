@@ -1,4 +1,4 @@
-var Library = require('../librarify');
+var Library = require('../src/librarify');
 
 var settings = {
   'url' : 'https://slack.com/api',
