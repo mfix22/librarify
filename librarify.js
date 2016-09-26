@@ -5,9 +5,8 @@ Library.prototype.config = function(config) {
   // set values to default values given
 
   if (this._defaults) this._configuration = this._defaults;
-  for (var key in config) {
-    this._configuration[key] = config[key]
-  }
+
+  this._configuration = Object.assign(this._configuration, config);
 }
 
 function validate(params, fname) {
@@ -104,8 +103,9 @@ function Library(settings) {
   this._configuration = {};
   this._defaults = {};
   this._requiredConfigs = [];
-  for (var key in settings.config) {
-    var value = settings.config[key];
+
+  Object.keys(settings.config).forEach((key) => {
+    const value = settings.config[key];
     if (typeof value == 'string') {
       this._configuration[key] = value; //config set to default originally
       this._defaults[key] = value;
@@ -116,32 +116,31 @@ function Library(settings) {
       this._configuration[key] = value.defaultVal; //config set to default originally
       this._defaults[key] = value.defaultVal;
     }
-  }
+  });
+
   this.fns = settings.fns;
 
   // used for to access get() for dynamic function naming
   this._get = get;
   this._post = post;
   this._put = put;
-  var call = '_get'
-  for (var fn in settings.fns) {
 
-    if (settings.fns.hasOwnProperty(fn)) {
-      if (/[a-zA-Z_$][0-9a-zA-Z_$]*\.[a-zA-Z_$][0-9a-zA-Z_$]*/i.test(fn)){
-        var split = fn.split('.');
-        var base = split[0];
-        var name = split[1];
-        if (!this[base]) this[base] = {};
-        this[base][name] = new Function('parent', 'fname',
-          "return function " + name + "(params, callback){ return parent._" + (settings.fns[fn].type || 'get').toLowerCase() + "(params, fname, callback); }"
-        )(this, fn);
-      } else {
-        this[fn] = new Function('fname',
-          "return function " + fn + "(params, callback){ return this._" + (settings.fns[fn].type || 'get').toLowerCase() + "(params, fname, callback); }"
-        )(fn);
-      }
+  Object.keys(settings.fns).forEach((fn) => {
+    // needs to be `parent.child` format, allowing only number and letter characters
+    if (/[a-zA-Z_$][0-9a-zA-Z_$]*\.[a-zA-Z_$][0-9a-zA-Z_$]*/i.test(fn)){
+      const split = fn.split('.');
+      const base = split[0];
+      const name = split[1];
+      if (!this[base]) this[base] = {};
+      this[base][name] = new Function('parent', 'fname',
+        "return function " + name + "(params, callback){ return parent._" + (settings.fns[fn].type || 'get').toLowerCase() + "(params, fname, callback); }"
+      )(this, fn);
+    } else {
+      this[fn] = new Function('fname',
+        "return function " + fn + "(params, callback){ return this._" + (settings.fns[fn].type || 'get').toLowerCase() + "(params, fname, callback); }"
+      )(fn);
     }
-  }
+  });
 }
 
 module.exports = Library;
