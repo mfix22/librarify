@@ -10,93 +10,9 @@ Library.prototype.config = function(config) {
   }
 }
 
-function put(params, fname, callback) {
-  var fn = this.fns[fname];
-  var address = this.url + (fn.route || "/" + fname)
-  if (this._requiredConfigs)
-    this._requiredConfigs.forEach((requirement) => {
-      if (!this._configuration[requirement] && !params[requirement]) throw new Error(requirement + " is required.");
-      // include configured parameters
-      params[requirement] = this._configuration[requirement];
-    });
-  if (fn.requiredParam)
-    fn.requiredParam.forEach((requirement) => {
-      if (!params[requirement]) throw new Error(requirement + " parameter is missing.");
-    });
-  if (fn.optionalConfig) {
-    if (typeof fn.optionalConfig == 'boolean' && fn.optionalConfig == true) {
-      for (var i in this._configuration) {
-        if (object.hasOwnProperty(i)) {
-          var option = this._configuration[i]
-          params[option] = params[option] || this._configuration[option];
-        }
-      }
-    } else{
-      fn.optionalConfig.forEach((option) => {
-        params[option] = params[option] || this._configuration[option]
-      });
-    }
-  }
-  if (callback) {
-    Request.post({url : address, form: params}, function (err, response, body) {
-      if (err) callback(err, null);
-      else callback(null, JSON.parse(body));
-    });
-  } else {
-    return new Promise(function (fulfill, reject){
-      Request.post(address, function (err, response, body) {
-        if (err) reject(err);
-        else fulfill(JSON.parse(body));
-      });
-    });
-  }
-}
-
-function post(params, fname, callback) {
-  var fn = this.fns[fname];
-  var address = this.url + (fn.route || "/" + fname)
-  if (this._requiredConfigs)
-    this._requiredConfigs.forEach((requirement) => {
-      if (!this._configuration[requirement] && !params[requirement]) throw new Error(requirement + " is required.");
-      // include configured parameters
-      params[requirement] = this._configuration[requirement];
-    });
-  if (fn.requiredParam)
-    fn.requiredParam.forEach((requirement) => {
-      if (!params[requirement]) throw new Error(requirement + " parameter is missing.");
-    });
-  if (fn.optionalConfig) {
-    if (typeof fn.optionalConfig == 'boolean' && fn.optionalConfig == true) {
-      for (var i in this._configuration) {
-        if (object.hasOwnProperty(i)) {
-          var option = this._configuration[i]
-          params[option] = params[option] || this._configuration[option];
-        }
-      }
-    } else{
-      fn.optionalConfig.forEach((option) => {
-        params[option] = params[option] || this._configuration[option]
-      });
-    }
-  }
-  if (callback) {
-    Request.post({url : address, form: params}, function (err, response, body) {
-      if (err) callback(err, null);
-      else callback(null, JSON.parse(body));
-    });
-  } else {
-    return new Promise(function (fulfill, reject){
-      Request.post(address, function (err, response, body) {
-        if (err) reject(err);
-        else fulfill(JSON.parse(body));
-      });
-    });
-  }
-}
-
-function get(params, fname, callback){
-  var fn = this.fns[fname];
-  var address = this.url + (fn.route || "/" + fname) + "?";
+function validate(params, fname) {
+  const fn = this.fns[fname];
+  let address = this.url + (fn.route || "/" + fname) + "?";
   if (this._requiredConfigs)
     this._requiredConfigs.forEach((requirement) => {
       if (!this._configuration[requirement] && !params[requirement]) throw new Error(requirement + " is required.");
@@ -125,6 +41,48 @@ function get(params, fname, callback){
     fn.optionalParam.forEach((option) => {
       if (params[option]) address += option + "=" + params[option] + "&";
     });
+  return address;
+}
+
+function put(params, fname, callback) {
+  const address = validate.call(this, params, fname);
+
+  if (callback) {
+    Request.post({url : address, form: params}, function (err, response, body) {
+      if (err) callback(err, null);
+      else callback(null, JSON.parse(body));
+    });
+  } else {
+    return new Promise(function (fulfill, reject){
+      Request.post(address, function (err, response, body) {
+        if (err) reject(err);
+        else fulfill(JSON.parse(body));
+      });
+    });
+  }
+}
+
+function post(params, fname, callback) {
+  const address = validate.call(this, params, fname);
+
+  if (callback) {
+    Request.post({url : address, form: params}, function (err, response, body) {
+      if (err) callback(err, null);
+      else callback(null, JSON.parse(body));
+    });
+  } else {
+    return new Promise(function (fulfill, reject){
+      Request.post(address, function (err, response, body) {
+        if (err) reject(err);
+        else fulfill(JSON.parse(body));
+      });
+    });
+  }
+}
+
+function get(params, fname, callback){
+  const address = validate.call(this, params, fname);
+
   if (callback) {
     Request.get(address, function (err, response, body) {
       if (err) callback(err, null);
@@ -167,6 +125,7 @@ function Library(settings) {
   this._put = put;
   var call = '_get'
   for (var fn in settings.fns) {
+
     if (settings.fns.hasOwnProperty(fn)) {
       if (/[a-zA-Z_$][0-9a-zA-Z_$]*\.[a-zA-Z_$][0-9a-zA-Z_$]*/i.test(fn)){
         var split = fn.split('.');
@@ -174,11 +133,11 @@ function Library(settings) {
         var name = split[1];
         if (!this[base]) this[base] = {};
         this[base][name] = new Function('parent', 'fname',
-          "return function " + name + "(params, callback){ return parent._" + (settings.fns[fn].type.toLowerCase() || 'get') + "(params, fname, callback); }"
+          "return function " + name + "(params, callback){ return parent._" + (settings.fns[fn].type || 'get').toLowerCase() + "(params, fname, callback); }"
         )(this, fn);
       } else {
         this[fn] = new Function('fname',
-          "return function " + fn + "(params, callback){ return this._" + (settings.fns[fn].type.toLowerCase() || 'get') + "(params, fname, callback); }"
+          "return function " + fn + "(params, callback){ return this._" + (settings.fns[fn].type || 'get').toLowerCase() + "(params, fname, callback); }"
         )(fn);
       }
     }

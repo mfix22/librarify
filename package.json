@@ -1,6 +1,6 @@
 {
   "name": "librarify",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Create a Node.js library instantly from a REST API",
   "main": "librarify.js",
   "directories": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "test",
-    "readme" : "node lib/readme.js"
+    "readme": "node lib/readme.js"
   },
   "keywords": [
     "library",
