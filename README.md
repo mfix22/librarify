@@ -124,6 +124,7 @@ $ npm run readme path_to_settings.json [path_to_output_file]
 ```
 
 ### Coming Soon
+Please contribute if you are interested!
 - [x] ~~Support RFC dotted method calleds~~
 - [x] ~~Automatic README generating script~~
 - [x] ~~Multiple HTTP request options (POST, PUT, DELETE)~~
