@@ -2,69 +2,8 @@ const Library = require('../src/librarify');
 const assert = require('assert');
 const {expect} = require('chai');
 
-const slackSettings = {
-  'url' : 'https://slack.com/api',
-  'config' : {
-    'token' : {
-      'required' : true
-    }
-  },
-  'fns' : {
-    'users.list' : {
-      'type' : 'POST'
-    }
-  }
-}
-
-const w3wsettings = {
-  'package' : 'w3w',
-  'url' : 'https://api.what3words.com/v2',
-  'config' : {
-    key : {
-      required : true
-    },
-    lang : 'en',
-    format : 'json',
-    display : 'full'
-  },
-
-  'fns' : {
-    'forward' : {
-      route : '/forward',
-      requiredConfig : ['key'],
-      requiredParam : ['addr'],
-    },
-    'reverse' : {
-      route : '/reverse',
-      requiredConfig : ['key'],
-      requiredParam : ['coords'],
-      optionalConfig : true,
-    },
-    'autosuggest' : {
-      route : '/autosuggest',
-      requiredConfig : ['key'],
-      requiredParam : ['addr'],
-      optionalConfig : true,
-      optionalParam : ['focus', 'clip']
-    },
-    'standardblend' : {
-      route : '/standardblend',
-      requiredConfig : ['key'],
-      requiredParam : ['addr'],
-      optionalConfig : ['lang', 'format'],
-      optionalParam : ['focus']
-    },
-    'grid' : {
-      requiredConfig : ['key'],
-      requiredParam : ['bbox'],
-      optionalConfig : ['format'],
-    },
-    'languages' : {
-      requiredConfig : ['key'],
-      optionalConfig : ['format'],
-    }
-  }
-}
+const slackSettings = require('../examples/slack/settings.json');
+const w3wsettings = require('../examples/what3words/settings.json');
 
 const slack = new Library(slackSettings);
 slack.config({

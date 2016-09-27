@@ -1,0 +1,49 @@
+{
+  "package" : "w3w",
+  "url" : "https://api.what3words.com/v2",
+  "config" : {
+    "key" : {
+      "required" : true
+    },
+    "lang" : "en",
+    "format" : "json",
+    "display" : "full"
+  },
+
+  "fns" : {
+    "forward" : {
+      "route" : "/forward",
+      "requiredConfig" : ["key"],
+      "requiredParam" : ["addr"]
+    },
+    "reverse" : {
+      "route" : "/reverse",
+      "requiredConfig" : ["key"],
+      "requiredParam" : ["coords"],
+      "optionalConfig" : true
+    },
+    "autosuggest" : {
+      "route" : "/autosuggest",
+      "requiredConfig" : ["key"],
+      "requiredParam" : ["addr"],
+      "optionalConfig" : true,
+      "optionalParam" : ["focus", "clip"]
+    },
+    "standardblend" : {
+      "route" : "/standardblend",
+      "requiredConfig" : ["key"],
+      "requiredParam" : ["addr"],
+      "optionalConfig" : ["lang", "format"],
+      "optionalParam" : ["focus"]
+    },
+    "grid" : {
+      "requiredConfig" : ["key"],
+      "requiredParam" : ["bbox"],
+      "optionalConfig" : ["format"]
+    },
+    "languages" : {
+      "requiredConfig" : ["key"],
+      "optionalConfig" : ["format"]
+    }
+  }
+}

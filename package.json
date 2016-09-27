@@ -7,7 +7,7 @@
     "example": "examples"
   },
   "scripts": {
-    "test": "test",
+    "test": "mocha test/integration.js",
     "readme": "node lib/readme.js"
   },
   "keywords": [

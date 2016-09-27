@@ -1,0 +1,13 @@
+{
+  "url" : "https://slack.com/api",
+  "config" : {
+    "token" : {
+      "required" : true
+    }
+  },
+  "fns" : {
+    "users.list" : {
+      "type" : "POST"
+    }
+  }
+}
