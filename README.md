@@ -1,4 +1,4 @@
-# Librarify
+# 📚 Librarify
 ### Create a Node.js library for your REST API with just a _settings_ JSON object
 
 **Librarify** is a library for creating libraries for REST APIs as easily as possible. When you create a library with **Librarify**, your library has functions to configure parameter requirements and defaults at a per-function and global basis.
